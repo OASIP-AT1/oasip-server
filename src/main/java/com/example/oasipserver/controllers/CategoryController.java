@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "http://intproj21.sit.kmutt.ac.th/")
+//@CrossOrigin(origins = "http://intproj21.sit.kmutt.ac.th/")
 //@CrossOrigin(origins = "*")
 @RequestMapping("/api/categories")
 public class CategoryController {

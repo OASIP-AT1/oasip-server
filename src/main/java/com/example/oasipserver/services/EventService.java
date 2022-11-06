@@ -61,11 +61,11 @@ public class EventService {
 //        if(!emailCheck.trim().equals(newEvent.getBookingEmail().trim())){
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Your Email is Invalid");
 //        }
-//        String role = userRepository.findRole(emailCheck);
+        String admin = userRepository.findRole(email);
 //        if(role == "lecturer"){
 //            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You dont have permission");
 //        }
-        if(!email.equals("guest")){
+        if(!admin.isEmpty() || !admin.equals("admin")){
         if(!email.trim().equals(newEvent.getBookingEmail().trim())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Your Email is Invalid");
         }
@@ -105,7 +105,8 @@ public class EventService {
         });
         token = token.replace("Bearer " , "");
         String emailCheck = jwtTokenUtil.getUsernameFromToken(token);
-        if(!emailCheck.trim().equals(event.getBookingEmail().trim())){
+        String adminRole = userRepository.findRole(emailCheck);
+        if(!emailCheck.trim().equals(event.getBookingEmail().trim()) && !adminRole.equals("admin")){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You dont have permission");
         }
         String role = userRepository.findRole(emailCheck);
